@@ -15,6 +15,9 @@ import TestTablePage from "@/components/TestTablePage";
 import TestPagination from "@/components/TestPagination";
 import PaginationDemo from "@/components/PaginationDemo";
 import TestPop from "@/components/TestPop";
+import TreeSelect from "@/components/TreeSelect";
+import TreeSelectDemo3 from "@/components/TreeSelectDemo3"
+
 
 Vue.use(Router);
 
@@ -91,6 +94,16 @@ export default new Router({
       path: "/TestPop",
       name: "TestPop",
       component: TestPop,
+    },
+    {
+      path: "/TreeSelect",
+      name: "TreeSelect",
+      component: TreeSelect,
+    },
+    {
+      path: "/TreeSelectDemo3",
+      name: "TreeSelectDemo3",
+      component: TreeSelectDemo3,
     },
   ],
 });
