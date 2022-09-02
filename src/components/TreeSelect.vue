@@ -17,8 +17,7 @@
 <script>
 //   :filterTreeNode="findKeyItem"
 //:treeExpandedKeys="treeExpandedKeys"
-//    :searchValue.sync="searchValue"
-//    @select="selectNode"
+//
 import { TreeSelect } from "ant-design-vue";
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 const treeData = [

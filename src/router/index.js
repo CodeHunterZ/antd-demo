@@ -11,12 +11,14 @@ import testSelectAddDemo from "@/components/testSelectAddDemo";
 import testSelectAddDemo2 from "@/components/testSelectAddDemo2";
 import MultiUploadComponets from "@/components/MultiUploadComponets";
 import FilesUpload from "@/components/FilesUpload";
+import FilesUploadv2 from "@/components/FilesUploadv2";
 import TestTablePage from "@/components/TestTablePage";
 import TestPagination from "@/components/TestPagination";
 import PaginationDemo from "@/components/PaginationDemo";
 import TestPop from "@/components/TestPop";
 import TreeSelect from "@/components/TreeSelect";
-import TreeSelectDemo3 from "@/components/TreeSelectDemo3"
+import TreeSelectDemo3 from "@/components/TreeSelectDemo3";
+import TreeSelectDemo4 from "@/components/TreeSelectDemo4";
 
 
 Vue.use(Router);
@@ -76,6 +78,11 @@ export default new Router({
       component: FilesUpload,
     },
     {
+      path: "/FilesUploadv2",
+      name: "FilesUploadv2",
+      component: FilesUploadv2,
+    },
+    {
       path: "/TestTablePage",
       name: "TestTablePage",
       component: TestTablePage,
@@ -104,6 +111,11 @@ export default new Router({
       path: "/TreeSelectDemo3",
       name: "TreeSelectDemo3",
       component: TreeSelectDemo3,
+    },
+    {
+      path: "/TreeSelectDemo4",
+      name: "TreeSelectDemo4",
+      component: TreeSelectDemo4,
     },
   ],
 });

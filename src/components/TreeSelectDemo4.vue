@@ -1,20 +1,30 @@
 <!-- Vue SFC -->
 <template>
   <div id="app">
-    <treeselect v-model="value" :multiple="true" :options="options" :limit="1" />
+    <multiselect
+      :options="options"
+      v-model="value"
+      :multiple="true"
+      :searchable="true"
+      :close-on-select="false"
+      :clear-on-select="false"
+      :limit="1"
+      @update="updateMultiValue"
+      placeholder="Pick some"
+      :label="label"
+      :key="id"
+    ></multiselect>
   </div>
 </template>
 
 <script>
 // import the component
-import Treeselect from "@riophae/vue-treeselect";
-// import the styles
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import Multiselect from "vue-multiselect";
 
 export default {
   // register the component
-  components: { Treeselect },
-  name: "TreeSelectDemo3",
+  components: { Multiselect },
+  name: "TreeSelectDemo4",
   data() {
     return {
       // define the default value
@@ -48,15 +58,8 @@ export default {
     };
   },
   methods: {
-    arrayhandle(arr) {
-      arr.map((item) => {
-        // 对数据进行处理
-        item.label = item.title;
-        if (item.children && item.children.length) {
-          arrayhandle(item.children);
-        }
-      });
-      return arr;
+    updateMultiValue(value) {
+      this.value = value;
     },
   },
 };
