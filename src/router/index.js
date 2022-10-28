@@ -19,6 +19,8 @@ import TestPop from "@/components/TestPop";
 import TreeSelect from "@/components/TreeSelect";
 import TreeSelectDemo3 from "@/components/TreeSelectDemo3";
 import TreeSelectDemo4 from "@/components/TreeSelectDemo4";
+import ChartPage from "@/components/ChartPage";
+
 
 
 Vue.use(Router);
@@ -116,6 +118,11 @@ export default new Router({
       path: "/TreeSelectDemo4",
       name: "TreeSelectDemo4",
       component: TreeSelectDemo4,
+    },
+    {
+      path: "/ChartPage",
+      name: "ChartPage",
+      component: ChartPage,
     },
   ],
 });
