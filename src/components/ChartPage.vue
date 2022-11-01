@@ -96,9 +96,21 @@ export default {
         },
         legend: {
           orient: "horizontal",
+          icon: "rect",
+          itemHeight: 16,
+          itemWidth: 16,
           left: "right",
           itemGap: 10,
           align: "left",
+          formatter: ["{a|{name}}"].join("\n"),
+          textStyle: {
+            height: 8,
+            rich: {
+              a: {
+                verticalAlign: "bottom",
+              },
+            },
+          },
         },
         xAxis: {
           type: "value",
@@ -148,7 +160,15 @@ export default {
             },
             label: {
               show: true,
-              formatter: "{c} 人",
+              formatter: function (params) {
+                let s = "";
+                if (params.data == 0) {
+                  s = params.data;
+                } else {
+                  s = params.data + "人";
+                }
+                return s;
+              },
               color: "white",
             },
             emphasis: {
@@ -175,6 +195,23 @@ export default {
               focus: "series",
             },
             data: [500, 500, 500, 500, 500],
+          },
+          //series中push合计的数据
+          {
+            name: "总计",
+            type: "bar",
+            stack: "",
+            label: {
+              normal: {
+                show: true,
+                position: "right",
+                color: "#000",
+              },
+            },
+            z: -1,
+            //不同系列的柱间距离，为百分比,如果想要两个系列的柱子重叠，可以设置 barGap 为 '-100%'。
+            barGap: "-100%",
+            data: [560, 530, 560, 560, 560],
           },
         ],
       });
@@ -237,37 +274,42 @@ export default {
               },
               US: {
                 height: 10,
-                width:28,
+                width: 28,
                 backgroundColor: {
-                  image: "https://pic.jitudisk.com/public/2022/10/28/3c32d33594955.jpg",
+                  image:
+                    "https://pic.jitudisk.com/public/2022/10/28/3c32d33594955.jpg",
                 },
               },
               UK: {
                 height: 10,
-                width:28,
+                width: 28,
                 backgroundColor: {
-                  image: "https://pic.jitudisk.com/public/2022/10/28/60e4a051095fa.jpg",
+                  image:
+                    "https://pic.jitudisk.com/public/2022/10/28/60e4a051095fa.jpg",
                 },
               },
               CA: {
                 height: 10,
-                width:28,
+                width: 28,
                 backgroundColor: {
-                  image: "https://pic.jitudisk.com/public/2022/10/28/f7f8f12c31ab9.jpg",
+                  image:
+                    "https://pic.jitudisk.com/public/2022/10/28/f7f8f12c31ab9.jpg",
                 },
               },
               JP: {
                 height: 10,
-                width:28,
+                width: 28,
                 backgroundColor: {
-                  image: "https://pic.jitudisk.com/public/2022/10/28/c36002e301afb.jpg",
+                  image:
+                    "https://pic.jitudisk.com/public/2022/10/28/c36002e301afb.jpg",
                 },
               },
               KR: {
                 height: 10,
-                width:28,
+                width: 28,
                 backgroundColor: {
-                  image: "https://pic.jitudisk.com/public/2022/10/28/e2a24d4e47f5a.png",
+                  image:
+                    "https://pic.jitudisk.com/public/2022/10/28/e2a24d4e47f5a.png",
                 },
               },
             },
@@ -352,9 +394,8 @@ export default {
       });
       myChart4.setOption({
         title: {
-          text: "Referer of a Website",
-          subtext: "Fake Data",
-          left: "center",
+          text: "性別",
+          left: "left",
         },
         tooltip: {
           trigger: "item",
@@ -371,11 +412,9 @@ export default {
             type: "pie",
             radius: "50%",
             data: [
-              { value: 1048, name: "Search Engine" },
-              { value: 735, name: "Direct" },
-              { value: 580, name: "Email" },
-              { value: 484, name: "Union Ads" },
-              { value: 300, name: "Video Ads" },
+              { value: 30, name: "男" },
+              { value: 30, name: "女" },
+              { value: 20, name: "保密" },
             ],
             emphasis: {
               itemStyle: {
@@ -649,161 +688,9 @@ export default {
         ],
       });
     },
-    test() {
-      var ROOT_PATH = "https://echarts.apache.org/examples";
-
-      var chartDom = document.getElementById("main10");
-      var myChart = echarts.init(chartDom);
-      var option;
-
-      const weatherIcons = {
-        Sunny: ROOT_PATH + "https://echarts.apache.org/examples/data/asset/img/weather/sunny_128.png",
-        Cloudy: ROOT_PATH + "/data/asset/img/weather/cloudy_128.png",
-        Showers: ROOT_PATH + "/data/asset/img/weather/showers_128.png",
-      };
-      const seriesLabel = {
-        show: true,
-      };
-      option = {
-        title: {
-          text: "Weather Statistics",
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        legend: {
-          data: ["City Alpha", "City Beta", "City Gamma"],
-        },
-        grid: {
-          left: 100,
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        xAxis: {
-          type: "value",
-          name: "Days",
-          axisLabel: {
-            formatter: "{value}",
-          },
-        },
-        yAxis: {
-          type: "category",
-          inverse: true,
-          data: ["Sunny", "Cloudy", "Showers"],
-          axisLabel: {
-            formatter: function (value) {
-              return "{" + value + "| }\n{value|" + value + "}";
-            },
-            margin: 20,
-            rich: {
-              value: {
-                lineHeight: 30,
-                align: "center",
-              },
-              Sunny: {
-                height: 40,
-                align: "center",
-                backgroundColor: {
-                  image:'image://'+ require('@/assets/flag/ca.jpg'),
-                },
-              },
-              Cloudy: {
-                height: 40,
-                align: "center",
-                backgroundColor: {
-                  image: weatherIcons.Cloudy,
-                },
-              },
-              Showers: {
-                height: 40,
-                align: "center",
-                backgroundColor: {
-                  image: weatherIcons.Showers,
-                },
-              },
-            },
-          },
-        },
-        series: [
-          {
-            name: "City Alpha",
-            type: "bar",
-            data: [165, 170, 30],
-            label: seriesLabel,
-            markPoint: {
-              symbolSize: 1,
-              symbolOffset: [0, "50%"],
-              label: {
-                formatter: "{a|{a}\n}{b|{b} }{c|{c}}",
-                backgroundColor: "rgb(242,242,242)",
-                borderColor: "#aaa",
-                borderWidth: 1,
-                borderRadius: 4,
-                padding: [4, 10],
-                lineHeight: 26,
-                // shadowBlur: 5,
-                // shadowColor: '#000',
-                // shadowOffsetX: 0,
-                // shadowOffsetY: 1,
-                position: "right",
-                distance: 20,
-                rich: {
-                  a: {
-                    align: "center",
-                    color: "#fff",
-                    fontSize: 18,
-                    textShadowBlur: 2,
-                    textShadowColor: "#000",
-                    textShadowOffsetX: 0,
-                    textShadowOffsetY: 1,
-                    textBorderColor: "#333",
-                    textBorderWidth: 2,
-                  },
-                  b: {
-                    color: "#333",
-                  },
-                  c: {
-                    color: "#ff8811",
-                    textBorderColor: "#000",
-                    textBorderWidth: 1,
-                    fontSize: 22,
-                  },
-                },
-              },
-              data: [
-                { type: "max", name: "max days: " },
-                { type: "min", name: "min days: " },
-              ],
-            },
-          },
-          {
-            name: "City Beta",
-            type: "bar",
-            label: seriesLabel,
-            data: [150, 105, 110],
-          },
-          {
-            name: "City Gamma",
-            type: "bar",
-            label: seriesLabel,
-            data: [220, 82, 63],
-          },
-        ],
-      };
-
-      option && myChart.setOption(option);
-    },
   },
   mounted() {
     this.initChart();
-    this.test();
   },
 };
 </script>
