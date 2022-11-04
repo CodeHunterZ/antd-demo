@@ -112,6 +112,41 @@ export default {
             },
           },
         },
+        tooltip: {
+          trigger: "axis", // 鼠标移入到柱子里面就会有一个提示，默认是item方式，如果有多个柱状图，堆在一块item就不太好了，个人喜欢axis方式的0
+          triggerOn: "mousemove", // 什么时候触发提示小图标，点击click的时候，或者鼠标滑过的时候，默认是mousemove鼠标滑过
+          /* formatter可以以字符串模板方式写，也可以用回调函数写，不过字符串模板略有限制，使用回调函数会灵活点 */
+          formatter: function (params) {
+            console.log("--x轴类目对应的参数数组--", params);
+            var res = "<div style='background-color:#fff'>"; // 字符串形式的html标签会被echarts转换渲染成数据，这个res主要是画的tooltip里的上部分的标题部分
+            res +=
+              "<div><p style='font-weight:bold'>" +
+              params[0].name +
+              " " +
+              params[params.length - 1].data +
+              "人";
+            (" </p></div>");
+            for (var i = 0; i < params.length; i++) {
+              //因为是个数组，所以要遍历拿到里面的数据，并加入到tooltip的数据内容部分里面去
+              res += `<div style="font-size: 14px; padding:0 12px;line-height: 24px">`;
+              if (!(params[i].color instanceof Object)) {
+                break;
+              }
+              res += ` <span style="display:inline-block; width:13px;height:13px;background: linear-gradient(${[
+                "to right",
+                params[i].color.colorStops[0].color,
+                params[i].color.colorStops[1].color, // 默认是小圆点，将其修改成正方形，这里用的是模板字符串。并拿到对应颜色、名字、数据
+              ]});"></span>`;
+
+              res += `
+              ${params[i].seriesName}
+              ${params[i].data}人
+                </div>`;
+            }
+            res += `</div>`;
+            return res; // 经过这么一加工，最终返回出去并渲染，最终就出现了我们所看的效果
+          },
+        },
         xAxis: {
           type: "value",
           axisLabel: {
@@ -125,6 +160,7 @@ export default {
           axisTick: {
             alignWithLabel: true,
           },
+          boundaryGap: true,
         },
         series: [
           {
@@ -258,13 +294,26 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: ["US", "UK", "CA", "JP", "KR"],
+          data: ["美国", "英国", "加拿大", "日本", "韩国"],
           axisTick: {
             alignWithLabel: true,
           },
           axisLabel: {
             formatter: function (value) {
-              return "{" + value + "| }\n{value|" + value + "}";
+              switch (value) {
+                case "美国":
+                  return "{US| }\n{value|" + value + "}";
+                case "英国":
+                  return "{UK| }\n{value|" + value + "}";
+                case "加拿大":
+                  return "{CA| }\n{value|" + value + "}";
+                case "日本":
+                  return "{JP| }\n{value|" + value + "}";
+                case "韩国":
+                  return "{KR| }\n{value|" + value + "}";
+                default:
+                  return "{value}";
+              }
             },
             margin: 20,
             rich: {
@@ -686,6 +735,9 @@ export default {
             data: [17325, 25438, 36000, 111594, 164141, 581807],
           },
         ],
+      });
+      myChart.on("click", function (params) {
+        console.log("onclick");
       });
     },
   },
