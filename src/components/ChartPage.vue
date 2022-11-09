@@ -279,11 +279,25 @@ export default {
           text: "人才画像分析",
           subtext: "报名IP地点",
         },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+        },
+        grid: {
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 0,
+          containLabel: true,
+        },
         legend: {
           orient: "horizontal",
           left: "right",
           itemGap: 10,
           align: "left",
+          show: true,
         },
         xAxis: {
           type: "value",
@@ -291,17 +305,30 @@ export default {
             formatter: "{value} 人",
           },
           position: "top",
+          splitNumber: 10,
+          minInterval: 1,
+          axisTick: {
+            show: true,
+          },
+          axisLine: {
+            show: true,
+          },
         },
         yAxis: {
+          inverse: true,
           type: "category",
-          data: ["美国", "英国", "加拿大", "日本", "韩国"],
+          data: ["美国123456789123456789", "英国", "加拿大", "日本", "韩国"],
           axisTick: {
             alignWithLabel: true,
+            show: true,
+          },
+          axisPointer: {
+            show: true,
           },
           axisLabel: {
             formatter: function (value) {
               switch (value) {
-                case "美国":
+                case "美国123456789123456789":
                   return "{US| }\n{value|" + value + "}";
                 case "英国":
                   return "{UK| }\n{value|" + value + "}";
@@ -315,7 +342,7 @@ export default {
                   return "{value}";
               }
             },
-            margin: 20,
+            margin: 10,
             rich: {
               value: {
                 lineHeight: 30,
@@ -683,6 +710,28 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            //自定义tooltip显示内容
+            // params可以拿到当前柱子的所有数据
+            let data = "";
+            let sum = 0;
+            for (let index = 0; index < params.length; index++) {
+              // 遍历params，拼接成自己想要的内容return出去
+              let str = params[index].marker.substring(
+                params[index].marker.indexOf("background-color")
+              );
+              const startNum = str.indexOf(":");
+              const endNum = str.indexOf(";");
+              const color = str.substring(startNum + 1, endNum);
+              const item = `${params[index].marker}<span>${params[index].seriesName}: ${params[index].data}</span><br/>`;
+              sum = sum + params[index].data;
+              data = data + item;
+            }
+            console.log(data);
+            const name = params[0].name;
+            data = name + "<br/>" + data + "总计： " + sum;
+            return data;
           },
         },
         legend: {},
