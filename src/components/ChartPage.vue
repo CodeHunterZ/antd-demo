@@ -4,6 +4,7 @@
     <div className="site-card-border-less-wrapper">
       <a-card style="width: 1200px">
         <div id="main" style="width: 1000px; height: 400px"></div>
+        <div id="tip" class="tipname" v-if="tipflag" :style="{'left': 55, 'top': 60}">{{tipValue}}</div>
       </a-card>
     </div>
     <br />
@@ -68,7 +69,12 @@ import { TreeSelect } from "ant-design-vue";
 export default {
   name: "ChartPage",
   data() {
-    return {};
+    return {
+      tipValue:"123",
+      tipflag:false,
+      leftpx:0,
+      toppx:0,
+    };
   },
   methods: {
     initChart() {
@@ -117,7 +123,7 @@ export default {
           triggerOn: "mousemove", // 什么时候触发提示小图标，点击click的时候，或者鼠标滑过的时候，默认是mousemove鼠标滑过
           /* formatter可以以字符串模板方式写，也可以用回调函数写，不过字符串模板略有限制，使用回调函数会灵活点 */
           formatter: function (params) {
-            console.log("--x轴类目对应的参数数组--", params);
+            //console.log("--x轴类目对应的参数数组--", params);
             var res = "<div style='background-color:#fff'>"; // 字符串形式的html标签会被echarts转换渲染成数据，这个res主要是画的tooltip里的上部分的标题部分
             res +=
               "<div><p style='font-weight:bold'>" +
@@ -160,6 +166,11 @@ export default {
           axisTick: {
             alignWithLabel: true,
           },
+          axisLabel: {
+            width: 50,
+            overflow: "truncate",
+          },
+          triggerEvent: true,
           boundaryGap: true,
         },
         series: [
@@ -785,8 +796,31 @@ export default {
           },
         ],
       });
-      myChart.on("click", function (params) {
-        console.log("onclick");
+      let self=this;
+      myChart.on("mouseover", function (params) {
+        if (params.componentType == "yAxis") {
+          //var tt = this.$refs.tipdom;
+          console.log(this)
+          self.tipValue=params.value;
+          self.tipflag=true;
+          console.log(
+            "x=" +
+              params.event.event.layerX +
+              " ---" +
+              "y=" +
+              params.event.event.layerY
+          );
+          self.leftpx=params.event.event.layerX + 10;
+          self.toppx=params.event.event.layerY + 20;
+          // tt.css("left", params.event.event.layerX + 10);
+          // tt.css("top", params.event.event.layerY + 20);
+        }
+      });
+      myChart.on("mouseout", function (params) {
+        if (params.componentType == "yAxis") {
+          self.tipValue="";
+          self.tipflag=false;
+        }
       });
     },
   },
@@ -799,6 +833,18 @@ export default {
 .site-card-border-less-wrapper {
   padding: 30px;
   background: #ececec;
+}
+.hide {
+  display: none;
+}
+.tipname {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  max-width: 400px;
+  padding: 5px;
+  z-index: 1;
+  color: #fff;
 }
 </style>
 
