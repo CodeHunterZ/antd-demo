@@ -4,7 +4,7 @@
     <div className="site-card-border-less-wrapper">
       <a-card style="width: 1200px">
         <div id="main" style="width: 1000px; height: 400px"></div>
-        <div id="tip" class="tipname" v-if="tipflag" :style="{'left': 55, 'top': 60}">{{tipValue}}</div>
+        <div id="tip" class="tipname" v-if="tipflag"  :style="{ left: leftpx + 'px', top: toppx + 'px'}">{{tipValue}}</div>
       </a-card>
     </div>
     <br />
@@ -810,10 +810,8 @@ export default {
               "y=" +
               params.event.event.layerY
           );
-          self.leftpx=params.event.event.layerX + 10;
-          self.toppx=params.event.event.layerY + 20;
-          // tt.css("left", params.event.event.layerX + 10);
-          // tt.css("top", params.event.event.layerY + 20);
+          self.leftpx=params.event.event.layerX + 30;
+          self.toppx=params.event.event.layerY + 40;
         }
       });
       myChart.on("mouseout", function (params) {
