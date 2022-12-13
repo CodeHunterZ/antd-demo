@@ -19,7 +19,9 @@ import TestPop from "@/components/TestPop";
 import TreeSelect from "@/components/TreeSelect";
 import TreeSelectDemo3 from "@/components/TreeSelectDemo3";
 import TreeSelectDemo4 from "@/components/TreeSelectDemo4";
+import TreeSelectDemo5 from "@/components/TreeSelectDemo5";
 import ChartPage from "@/components/ChartPage";
+import TestEmail from "@/components/TestEmail";
 
 
 
@@ -120,9 +122,19 @@ export default new Router({
       component: TreeSelectDemo4,
     },
     {
+      path: "/TreeSelectDemo5",
+      name: "TreeSelectDemo5",
+      component: TreeSelectDemo5,
+    },
+    {
       path: "/ChartPage",
       name: "ChartPage",
       component: ChartPage,
+    },
+    {
+      path: "/TestEmail",
+      name: "TestEmail",
+      component: TestEmail,
     },
   ],
 });
